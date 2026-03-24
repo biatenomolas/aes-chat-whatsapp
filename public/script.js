@@ -4,7 +4,7 @@ let myName = prompt("Ton nom pour la simulation ? (ex: Alice)", "Alice") || "Ali
 
 function sendMessage() {
     const text = document.getElementById("messageInput").value.trim();
-    const key = "1234567890123456";   // clé fixe pour l'exposé
+    const key = "1234567890123456";
 
     if (!text) return;
 
