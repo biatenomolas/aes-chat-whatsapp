@@ -2,132 +2,118 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>WhatsApp AES 🔐</title>
+    <title>🔐 WhatsApp AES Sécurisé (Simulation Exposé)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            font-family: 'Roboto', sans-serif; 
-            background: #0f172a; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
-            overflow: hidden;
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #0f172a;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        header { 
-            background: #075E54; 
-            color: white; 
-            padding: 14px 16px; 
-            display: flex; 
-            align-items: center; 
-            font-size: 19px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        header {
+            background: #1e2937;
+            padding: 15px;
+            text-align: center;
+            color: #22d3ee;
+            font-size: 1.25rem;
         }
-        .messages { 
-            flex: 1; 
-            padding: 15px 10px; 
-            overflow-y: auto; 
-            background: #0a1625 url('https://i.imgur.com/5y3q2.png') repeat; 
-            background-size: cover; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px;
+        .key-area {
+            background: #1e2937;
+            padding: 10px;
+            text-align: center;
         }
-        .message { 
-            max-width: 82%; 
-            padding: 11px 15px; 
-            border-radius: 18px; 
-            font-size: 16.5px; 
-            line-height: 1.45;
-            word-wrap: break-word;
+        .key-area input {
+            width: 80%;
+            max-width: 280px;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
         }
-        .me { 
-            align-self: flex-end; 
-            background: #DCF8C6; 
-            color: #111; 
-            border-bottom-right-radius: 5px;
+        .messages {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #0a1625;
         }
-        .other { 
-            align-self: flex-start; 
-            background: #1e2937; 
-            color: white; 
-            border-bottom-left-radius: 5px;
+        .message {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 1rem;
+            word-break: break-word;
         }
-        .encrypted { 
-            font-size: 13.5px; 
-            color: #777; 
-            word-break: break-all; 
-            margin-top: 5px;
-        }
-        .time { 
-            font-size: 11px; 
-            color: #888; 
-            text-align: right; 
-            margin-top: 4px;
-        }
-        .input-area { 
-            background: #075E54; 
-            padding: 10px 8px; 
-            display: flex; 
+        .me { align-self: flex-end; background: #22d3ee; color: #0f172a; }
+        .other { align-self: flex-start; background: #1e2937; color: #e2e8f0; }
+        .encrypted { font-size: 0.85rem; color: #94a3b8; margin-top: 5px; word-break: break-word; }
+        .input-area {
+            background: #1e2937;
+            padding: 12px;
+            display: flex;
             gap: 8px;
-            align-items: center;
+            flex-wrap: wrap;
         }
-        input { 
-            flex: 1; 
-            padding: 14px 18px; 
-            border: none; 
-            border-radius: 30px; 
-            background: #ffffff; 
-            font-size: 16px;
+        .input-area input {
+            flex: 1;
+            min-width: 60%;
+            padding: 14px;
+            border-radius: 30px;
+            border: none;
+            outline: none;
+            background: #334155;
+            color: white;
         }
-        button { 
-            background: #25D366; 
-            color: white; 
-            border: none; 
-            width: 52px; 
-            height: 52px; 
-            border-radius: 50%; 
-            font-size: 22px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        .input-area button {
+            flex-shrink: 0;
+            padding: 14px 20px;
+            border-radius: 30px;
+            background: #22d3ee;
+            color: #0f172a;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
         }
-        .decrypt-btn { 
-            background: #f472b6; 
-            color: white; 
-            padding: 7px 16px; 
-            border-radius: 20px; 
-            font-size: 14px; 
-            margin-top: 6px;
+        .decrypt-btn {
+            background: #f472b6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            margin-top: 8px;
+            border: none;
+            cursor: pointer;
         }
 
-        /* Amélioration mobile */
-        @media (max-width: 768px) {
-            .message { max-width: 88%; font-size: 16px; }
-            input { font-size: 16px; padding: 15px 18px; }
-            button { width: 50px; height: 50px; font-size: 20px; }
+        /* Media query pour petit écran */
+        @media (max-width: 480px) {
+            .message { max-width: 90%; font-size: 0.95rem; }
+            .input-area input { min-width: 55%; }
+            header { font-size: 1.1rem; }
         }
     </style>
 </head>
 <body>
+<header>🔐 WhatsApp AES Sécurisé (Simulation Exposé)</header>
 
-<header>
-    🔐 WhatsApp AES Sécurisé
-</header>
+<div class="key-area">
+    Clé secrète : 
+    <input id="key" type="text" value="1234567890123456">
+</div>
 
 <div class="messages" id="messages"></div>
 
 <div class="input-area">
     <input id="messageInput" type="text" placeholder="Tape ton message ici...">
-    <button onclick="sendMessage()">➤</button>
+    <button onclick="sendMessage()">Chiffrer & Envoyer</button>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
 <script src="script.js"></script>
-
 </body>
 </html>
