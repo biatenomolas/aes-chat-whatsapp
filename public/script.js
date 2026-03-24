@@ -1,17 +1,15 @@
 const socket = io();
 
-// Petit nom pour la simulation (change-le si tu veux)
-let myName = prompt("Ton nom ? (Alice ou Bob)", "Alice") || "";
+let myName = prompt("Ton nom pour la simulation ? (ex: Alice)", "Alice") || "Alice";
 
 function sendMessage() {
     const text = document.getElementById("messageInput").value.trim();
-    const key = "1234567890123456"; // clé fixe pour l'exposé (tu peux la changer)
+    const key = "1234567890123456";   // clé fixe pour l'exposé
 
     if (!text) return;
 
     const encrypted = CryptoJS.AES.encrypt(text, key).toString();
 
-    // Bulle chez moi
     addMessage("me", `
         <strong>${myName} :</strong><br>
         Original : ${text}<br>
